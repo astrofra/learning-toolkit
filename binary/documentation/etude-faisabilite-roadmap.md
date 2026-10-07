@@ -6,7 +6,7 @@ Statut : proposition de conception ; les charges et les critères pédagogiques 
 
 ## 1. Recommandation
 
-**Le projet est réalisable avec du JavaScript vanilla, du HTML, du SVG et des animations CSS légères.** Une application statique suffit pour présenter les cours, manipuler les bits, corriger les exercices et conserver une progression sur l’appareil de l’étudiant.
+**Le projet est réalisable avec du JavaScript vanilla, du HTML, du SVG et des animations CSS légères, hébergés sur GitHub Pages.** Une application statique suffit pour présenter les cours, manipuler les bits, corriger les exercices et conserver une progression sur l’appareil de l’étudiant. GitHub Pages publie précisément ce type de fichiers depuis un dépôt : [présentation officielle](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages).
 
 Le format recommandé est un **diaporama interactif organisé en sept modules**, utilisable en projection et individuellement. Chaque notion suit le même mouvement : une question, une prédiction de l’étudiant, une manipulation, une explication, puis un exercice de transfert vers le code.
 
@@ -51,7 +51,7 @@ Ces points proviennent de la lecture des supports et, pour les exemples RVB, de 
 | Partie 1, p. 6 et 20 : byte, octet, mot, long | Un octet contient toujours 8 bits. Pour le modèle du cours, annoncer des bytes de 8 bits ; les tailles des types C/C++ et du « mot machine » doivent être précisées séparément. |
 | Partie 2, p. 7–8 : décalages | La multiplication peut perdre des bits à largeur finie ; la division d’un entier non signé élimine le reste. Les valeurs signées demandent un traitement distinct. |
 | Partie 2, p. 11–14 : signe et complément à deux | Le bit de poids fort a un poids négatif en complément à deux. Le motif ne se lit pas comme un signe suivi d’une valeur absolue ; zéro appartient aussi aux valeurs non signées. |
-| Partie 2, p. 22 : trois composantes à `FF` | L’expression affichée répète le champ vert. Pour obtenir le blanc annoncé par trois composantes maximales : `0xFF0000 | 0x00FF00 | 0x0000FF = 0xFFFFFF`. |
+| Partie 2, p. 22 : trois composantes à `FF` | L’expression affichée répète le champ vert. Pour obtenir le blanc annoncé par trois composantes maximales : `0xFF0000 \| 0x00FF00 \| 0x0000FF = 0xFFFFFF`. |
 | Partie 2, p. 23–24 : assemblage RVB | Utiliser `0x0000E9` et `0x000048` comme termes bleus. Les termes affichés `0x00FFE9` et `0x00FF48` modifient aussi le vert. |
 | Partie 2, p. 29 : `0xEDA27B` | Cette valeur correspond à RVB `(237, 162, 123)`. RVB `(227, 162, 120)` correspond à `0xE3A278`. |
 | Partie 2, p. 29–31 : RVB12 | Distinguer le code compact `0xEA7` de sa reconstruction pour l’affichage. Avec ajout de quatre zéros par composante : `(224, 160, 112)` ; avec répétition du quartet : `(238, 170, 119)`. Annoncer la convention choisie. |
@@ -172,6 +172,8 @@ Une mémoire de 16 cases de 8 bits, un registre d’adresse de 4 bits, deux regi
 
 Le parcours illustre « charger, calculer, stocker » avec une séquence fictive clairement étiquetée. Les commandes sont fixes et prédéfinies. Une affectation C/C++ peut ainsi être rapprochée d’opérations machine, sans présenter cette séquence comme la sortie garantie d’un compilateur réel.
 
+L’activité sur `0x1234` introduit l’ordre des octets, ou *endianness*. Elle distingue cet ordre en mémoire de l’ordre d’écriture des bits à l’intérieur d’un octet.
+
 ## 6. Contrat de précision pour le C/C++
 
 Chaque activité annonce sa largeur, son interprétation et sa règle de calcul. Trois niveaux doivent rester identifiables : le nombre mathématique, le registre simulé, puis l’expression C/C++ avec ses types.
@@ -199,7 +201,7 @@ Chaque fragment sera compilé et vérifié dans la version du langage annoncée.
 | Correction et indices | Exercices déclaratifs, réponses attendues et explications contextualisées | Moyenne ; rédaction pédagogique plus coûteuse que le calcul |
 | Mode projection et petit écran | CSS Grid/Flexbox, dispositions adaptées, tailles de texte variables | Moyenne ; vérifier la lisibilité des groupes de bits |
 | Sauvegarde locale | `localStorage`, état versionné, reprise et remise à zéro | Faible ; aucune synchronisation entre appareils |
-| Mise en ligne | Hébergement de fichiers statiques sous HTTPS | Faible ; choisir l’hébergement au moment du déploiement |
+| Mise en ligne | GitHub Pages sous HTTPS, publication par GitHub Actions | Faible ; vérifier les chemins sous le nom du dépôt |
 | Exécution libre de C/C++ | Compilateur distant ou environnement WebAssembly | Forte ; évolution séparée, inutile pour le premier parcours |
 
 ### Architecture proposée
@@ -256,7 +258,28 @@ Le noyau devra valider toute la saisie : base autorisée, caractères, signe év
 
 La progression conservée localement comporte le dernier écran, les exercices réalisés et les préférences d’affichage. Une impossibilité d’écrire dans le stockage ne bloque pas le cours : la session continue en mémoire et indique simplement que la reprise ne sera pas conservée. Ce comportement tient compte des [conditions et limites de `localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
 
-Les coûts récurrents se limitent essentiellement à l’hébergement statique, au domaine éventuel et à la maintenance du contenu. Les tarifs dépendront de l’hébergement retenu. Un journal de versions et une vérification avant chaque rentrée suffisent pour organiser l’entretien initial.
+Avec un dépôt public et GitHub Free, GitHub Pages est disponible sans abonnement supplémentaire pour l’hébergement ; un domaine personnalisé reste facultatif. La maintenance concerne surtout le contenu et sa vérification avant chaque rentrée. La disponibilité selon la visibilité du dépôt et l’offre GitHub est précisée dans la [documentation GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages).
+
+### Publication recommandée avec GitHub Pages
+
+Le dépôt peut conserver le code de l’application dans `binary/`. **Un workflow GitHub Actions publiera uniquement les fichiers nécessaires au site**, en plaçant `binary/index.html` à la racine du dossier publié. Les PDF de référence et les tests resteront dans le dépôt, hors de ce dossier de publication, sauf décision de proposer les PDF au téléchargement.
+
+Pour un dépôt GitHub nommé `learning-toolkit`, l’adresse attendue serait `https://<compte>.github.io/learning-toolkit/`. Cette URL est un exemple de destination, pas un site déjà publié. Si le dépôt accueille ensuite plusieurs applications, on pourra conserver un accueil commun et placer ce parcours sous `/learning-toolkit/binary/`.
+
+La mise en place comprendra :
+
+1. Choisir « GitHub Actions » comme source dans les paramètres Pages du dépôt.
+2. Ajouter un workflow `.github/workflows/deploy-pages.yml`, lancé sur la branche de publication et manuellement.
+3. Vérifier les calculs, préparer un dossier avec le HTML, les styles, les modules JS et les ressources utilisées, puis le publier avec les actions officielles Pages.
+4. Vérifier sur l’URL publiée les liens directs vers les écrans, le rechargement, les ressources et la sauvegarde locale.
+
+Cette organisation utilise le [déploiement personnalisé de GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages). Elle ne nécessite pas de compilation de l’application : le workflow peut simplement vérifier, copier et publier les fichiers.
+
+Les liens vers les ressources seront relatifs, par exemple `./styles/base.css`, pour fonctionner sous le préfixe du dépôt. La navigation utilisera un fragment tel que `#module-b/ecran-08` : le navigateur recharge toujours le même `index.html`, sans demander au serveur une route applicative inexistante.
+
+Une publication directe depuis une branche reste possible à la racine ou depuis `/docs`. GitHub ne propose pas de sélectionner arbitrairement `/binary` dans ce mode ; c’est la raison pratique du choix de GitHub Actions ici. Voir les [sources de publication autorisées](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
+
+Les étudiants accèdent au cours par son URL. Les réponses et la progression restent dans leur navigateur. Le déploiement Pages fait partie de l’étape 4 de la roadmap ; aucun service applicatif côté serveur n’est nécessaire pour ce périmètre.
 
 ## 8. Animation, lisibilité et accessibilité
 
@@ -287,7 +310,7 @@ Pour la projection, tester une diapositive réelle dans la salle : contraste, ta
 | Application RVB et fragments C/C++ vérifiés | Audio signé/non signé, sprites monochromes et formats de fichiers |
 | Indices, corrections, bilan local par compétence | Export/import de progression, version imprimable, mode hors ligne installé |
 | Modes projection et individuel | Synchronisation d’une classe, tableau de bord enseignant, intégration à une plateforme pédagogique |
-| Ressources statiques et reprise locale | Éditeur et exécution libre de C/C++ |
+| Publication GitHub Pages et reprise locale | Éditeur et exécution libre de C/C++ |
 
 L’autocorrection initiale porte sur des nombres, des bits et des fragments à compléter avec des choix délimités. La compilation d’un programme arbitraire saisi dans le navigateur constitue un autre chantier.
 
@@ -303,7 +326,7 @@ Les charges ci-dessous sont des **estimations de conception**, pas un devis. Ell
 | **1. Prototype de six écrans** | 4–6 jours | Écrans 02, 04, 07, 08, 18 et 24 ; registre, regroupement hexa, retenues et décalage ; première navigation accessible | Un petit groupe peut manipuler et expliquer les changements ; lisibilité en projection vérifiée |
 | **2. Composants et interactions** | 8–12 jours | Noyau de calcul, opérations, signé, mémoire, RVB, contrôleur des étapes, modes et sauvegarde | Cas de référence automatisés corrects ; composants utilisables au clavier et sans mouvement |
 | **3. Parcours complet** | 5–8 jours | Intégrer les 40 écrans, consignes, indices et corrections ; vérifier les exemples C/C++ ; harmoniser le vocabulaire | Parcours intégral réalisable ; chaque compétence possède au moins un exercice autonome |
-| **4. Essais, corrections et mise en ligne** | 4–6 jours | Essais en salle et individuels ; vérification des navigateurs ; corrections ; documentation d’usage ; publication statique | Critères de réception satisfaits et version identifiée |
+| **4. Essais, corrections et mise en ligne** | 4–6 jours | Essais en salle et individuels ; vérification des navigateurs ; corrections ; documentation d’usage ; workflow GitHub Actions et publication Pages | Critères de réception satisfaits, URL publiée vérifiée et version identifiée |
 | **Total hors réserve** | **23–35 jours** | Première version complète | |
 | **Réserve d’environ 20 %** | **5–7 jours** | Ajustements issus des essais et problèmes de présentation | |
 | **Enveloppe de planification** | **28–42 jours** | Environ six à neuf semaines à temps plein | |
