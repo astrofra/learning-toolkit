@@ -1,0 +1,104 @@
+:root {
+  --font-text: "Roboto", Arial, sans-serif;
+  --font-code: "Roboto Mono", monospace;
+  --color-page: #eee;
+  --color-surface: #fff;
+  --color-text: #171717;
+  --color-muted: #595959;
+  --color-bit-on: #eeff41;
+  --color-bit-off: #171717;
+  --color-accent: #842578;
+  --color-accent-secondary: #b41859;
+  --color-border: #d1d1ce;
+  font-family: var(--font-text);
+  color: var(--color-text);
+  background: var(--color-page);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+button, input { font: inherit; }
+button { color: inherit; cursor: pointer; }
+button:disabled { cursor: default; opacity: .5; }
+button, a, input { -webkit-tap-highlight-color: transparent; }
+button, a { touch-action: manipulation; }
+button svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex: 0 0 auto; }
+button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 5px; }
+h1, h2, p { margin: 0; }
+a { color: inherit; }
+[hidden] { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.skip-link { position: absolute; top: 12px; left: 12px; z-index: 10; background: white; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip-link:focus { position: fixed; width: auto; height: auto; padding: 12px 18px; clip-path: none; }
+.page-shell { width: min(1440px, 100%); padding: 0 64px; margin: auto; }
+.site-header { min-height: 98px; display: flex; align-items: center; justify-content: space-between; gap: 28px; border-bottom: 1px solid var(--color-border); }
+.brand { display: inline-flex; align-items: center; gap: 14px; text-decoration: none; flex-shrink: 0; }
+.brand-symbol { display: flex; font: 500 21px var(--font-code); }
+.brand-symbol span { width: 31px; height: 39px; display: grid; place-items: center; }
+.brand-symbol span:first-child { color: white; background: var(--color-bit-off); }
+.brand-symbol span:last-child { background: var(--color-bit-on); }
+.brand-name { font-size: 20px; font-weight: 500; letter-spacing: -.5px; }
+.brand-name > span { display: block; margin-top: 4px; font-size: 11px; font-weight: 400; color: var(--color-muted); letter-spacing: .1px; }
+.header-actions { display: flex; align-items: center; gap: 12px; }
+.course-label { max-width: 155px; margin-right: 8px; color: var(--color-muted); font-size: 10px; letter-spacing: 1.25px; line-height: 1.8; }
+.tool-button { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 9px 12px; background: transparent; border: 1px solid transparent; border-radius: 4px; font-size: 12px; }
+.tool-button:hover { background: #e3e3e1; }
+.tool-button[aria-pressed="true"] { border-color: var(--color-accent); color: var(--color-accent); background: #fff9fe; }
+main:focus { outline: none; }
+.chapter-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 28px 0; }
+.eyebrow, .screen-index, .section-kicker, .diagram-label, .convention-title, .takeaway-label { font: 400 10px/1.5 var(--font-code); letter-spacing: 1.5px; }
+.eyebrow { display: flex; align-items: center; gap: 11px; }
+.chapter-letter { display: grid; place-items: center; width: 23px; height: 23px; border: 1px solid var(--color-accent); color: var(--color-accent); font-size: 12px; }
+.screen-index { color: var(--color-muted); }
+.screen-index strong { color: var(--color-text); font-weight: 500; margin-left: 8px; }
+.text-button { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 7px 0 7px 10px; border: 0; background: none; color: var(--color-muted); font-size: 12px; }
+.text-button:hover { color: var(--color-accent); }
+.primary-button { display: inline-flex; align-items: center; justify-content: space-between; gap: 32px; min-height: 52px; padding: 16px 21px; border: 1px solid var(--color-bit-off); border-radius: 3px; color: white; background: var(--color-bit-off); font-size: 14px; }
+.primary-button:not(:disabled):hover { background: var(--color-accent); border-color: var(--color-accent); }
+.primary-button > span { font-size: 20px; line-height: 1; }
+.site-footer { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 18px 0 20px; border-top: 1px solid var(--color-border); }
+.course-signature { display: flex; align-items: center; gap: 12px; font-size: 8px; line-height: 1.7; letter-spacing: 1px; color: var(--color-muted); }
+.course-signature span span { font-size: 11px; letter-spacing: 0; }
+.ati-logo { width: 45px; height: 45px; object-fit: contain; }
+.university-logo { width: 118px; height: auto; }
+.footer-lesson { font: 400 10px var(--font-code); color: var(--color-muted); }
+.footer-lesson > span { display: inline-block; margin: 0 12px; color: #9b9b9b; }
+.notice { padding: 20px; border: 1px solid var(--color-accent); margin-bottom: 30px; line-height: 1.6; }
+
+@media (min-width: 1100px) {
+  body[data-projection="true"] .page-shell { width: min(1600px, 100%); padding-inline: 48px; }
+  body[data-projection="true"] h1 { font-weight: 400; }
+  body[data-projection="true"] .lead { font-size: 24px; }
+  body[data-projection="true"] .definition p { font-size: 18px; }
+  body[data-projection="true"] .state-name { font-size: 23px; }
+  body[data-projection="true"] .diagram-label { font-size: 12px; }
+}
+@media (min-width: 1400px) {
+  .page-shell { min-height: 100svh; display: flex; flex-direction: column; }
+  .site-footer { margin-top: auto; }
+}
+@media (max-width: 1150px) {
+  .page-shell { padding-inline: 36px; }
+  .course-label { display: none; }
+}
+@media (max-width: 760px) {
+  .page-shell { padding-inline: 22px; }
+  .site-header { min-height: 91px; gap: 12px; }
+  .brand-name { font-size: 18px; }
+  .brand-name > span { font-size: 9px; }
+  .brand { gap: 10px; }
+  .brand-symbol span { width: 25px; height: 34px; font-size: 18px; }
+  .header-actions { gap: 4px; }
+  .tool-button { padding: 10px; }
+  .tool-button span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .chapter-heading { padding: 25px 0 29px; }
+  .site-footer { flex-wrap: wrap; gap: 18px; }
+  .footer-lesson { order: 3; width: 100%; }
+  .university-logo { width: 100px; }
+}
+@media (max-width: 380px) {
+  .page-shell { padding-inline: 16px; }
+  .brand-name > span { max-width: 135px; line-height: 1.5; }
+}

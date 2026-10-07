@@ -1,0 +1,8 @@
+.switch-knob { transition: transform 180ms ease, background-color 180ms ease; }
+.switch-track, .bit-tile, .bulb-glass, .bulb-filament { transition: background-color 180ms ease, color 180ms ease, fill 180ms ease, stroke 180ms ease; }
+.bulb-rays, .lamp-glow { transition: opacity 220ms ease; }
+.primary-button, .tool-button { transition: background-color 150ms ease, border-color 150ms ease; }
+body[data-motion="reduced"] *, body[data-motion="reduced"] *::before, body[data-motion="reduced"] *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+@media (prefers-reduced-motion: reduce) {
+  body:not([data-motion="full"]) *, body:not([data-motion="full"]) *::before, body:not([data-motion="full"]) *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

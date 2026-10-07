@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#eeeeee">
+    <meta name="description" content="Comprendre le binaire en le manipulant. Une première expérience autour d’un interrupteur, de deux états et d’un bit.">
+    <title>Pourquoi deux états ? — Atelier binaire · ATI</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+    <link rel="preload" href="./fonts/roboto-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="./fonts/roboto-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="./styles/fonts.css">
+    <link rel="stylesheet" href="./styles/base.css">
+    <link rel="stylesheet" href="./styles/two-states.css">
+    <link rel="stylesheet" href="./styles/motion.css">
+    <script type="module" src="./js/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#lesson">Aller à l’expérience</a>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="./" aria-label="Atelier binaire, accueil">
+          <span class="brand-symbol" aria-hidden="true"><span>0</span><span>1</span></span>
+          <span class="brand-name">Atelier binaire<span>Comprendre. Manipuler. Programmer.</span></span>
+        </a>
+        <div class="header-actions">
+          <span class="course-label">PROGRAMMATION GRAPHIQUE · ATI M1</span>
+          <button class="tool-button" id="projection-toggle" type="button" aria-pressed="false" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18M5 4v12h14V4M12 16v5m-4 0 4-3 4 3"/></svg>
+            <span>Projection</span>
+          </button>
+          <button class="tool-button motion-toggle" id="motion-toggle" type="button" aria-pressed="false" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m13 3-7 10h6l-1 8 7-11h-6l1-7Z"/></svg>
+            <span>Mouvement réduit</span>
+          </button>
+        </div>
+      </header>
+
+      <main id="lesson" tabindex="-1">
+        <div class="chapter-heading">
+          <p class="eyebrow"><span class="chapter-letter">A</span> LES FONDAMENTAUX</p>
+          <span class="screen-index">ÉCRAN <strong>01</strong></span>
+        </div>
+
+        <div class="lesson-layout">
+          <section class="lesson-introduction" aria-labelledby="lesson-title">
+            <p class="section-kicker">DU MONDE PHYSIQUE AU NUMÉRIQUE</p>
+            <h1 id="lesson-title">Pourquoi<br> deux états<span class="title-question">?</span></h1>
+            <p class="lead">Éteint ou allumé.<br>Deux états suffisent pour commencer<br class="desktop-break"> à représenter une information.</p>
+            <div class="definition">
+              <span class="definition-number" aria-hidden="true">1<span>bit</span></span>
+              <p>Une information qui peut prendre<br>l’une de <strong>deux valeurs : 0 ou 1.</strong></p>
+            </div>
+            <p class="lesson-instruction"><span class="instruction-arrow" aria-hidden="true">↗</span> Faites basculer l’interrupteur.<br> Observez ce qui change.</p>
+          </section>
+
+          <section class="experiment" id="experiment" data-on="false" aria-labelledby="experiment-title">
+            <div class="experiment-header">
+              <h2 class="eyebrow" id="experiment-title"><span class="experiment-dot" aria-hidden="true"></span> À VOUS DE MANIPULER</h2>
+              <button class="text-button" id="reset" type="button" disabled>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></svg>
+                Recommencer
+              </button>
+            </div>
+
+            <div class="demonstration">
+              <div class="physical-state">
+                <p class="diagram-label">L’ÉTAT PHYSIQUE</p>
+                <div class="lamp" aria-hidden="true">
+                  <div class="lamp-glow"></div>
+                  <svg class="bulb" viewBox="0 0 120 144" fill="none">
+                    <g class="bulb-rays"><path d="M60 6v10M14 26l8 8M3 66h12M106 26l-8 8M117 66h-12"/></g>
+                    <path class="bulb-glass" d="M60 27a33 33 0 0 0-24 56c6 6 10 13 10 20h28c0-7 4-14 10-20a33 33 0 0 0-24-56Z"/>
+                    <path class="bulb-filament" d="M53 102V76l-8-10m22 36V76l8-10M45 66l15 10 15-10"/>
+                    <path class="bulb-base" d="M45 104h30v12H45zM49 121h22M53 127h14"/>
+                  </svg>
+                </div>
+                <p class="state-name" id="physical-label">Lampe éteinte</p>
+                <button class="switch" id="lamp-switch" type="button" role="switch" aria-checked="false" aria-label="Interrupteur de la lampe" aria-describedby="switch-hint" disabled>
+                  <span class="switch-track"><span class="switch-knob"></span><span class="switch-state" aria-hidden="true">0</span></span>
+                </button>
+                <p class="switch-hint" id="switch-hint">Cliquez pour basculer</p>
+              </div>
+
+              <div class="encoding-arrow" aria-hidden="true"><span>on le note</span><svg viewBox="0 0 90 20"><path d="M1 10h84m-9-8 9 8-9 8"/></svg></div>
+
+              <div class="binary-state">
+                <p class="diagram-label">SA REPRÉSENTATION</p>
+                <div class="bit-tile" aria-hidden="true"><span id="bit-value">0</span><span class="bit-caption">BINAIRE</span></div>
+                <p class="state-name">La valeur du bit</p>
+                <p class="binary-explanation">Un symbole pour<br>représenter cet état.</p>
+              </div>
+            </div>
+
+            <div class="convention" aria-label="Convention utilisée dans cette expérience">
+              <span class="convention-title">NOTRE CONVENTION</span>
+              <span class="convention-pair" data-convention="off"><span class="state-dot" aria-hidden="true"></span> Éteint <span aria-hidden="true">→</span> <strong>0</strong></span>
+              <span class="convention-pair" data-convention="on"><span class="state-dot" aria-hidden="true"></span> Allumé <span aria-hidden="true">→</span> <strong>1</strong></span>
+            </div>
+            <div class="observation">
+              <span class="observation-mark" id="observation-mark" aria-hidden="true">↔</span>
+              <p id="observation-text">Deux états possibles. Essayez de passer de l’un à l’autre.</p>
+            </div>
+            <p class="sr-only" id="state-announcement" role="status" aria-live="polite" aria-atomic="true"></p>
+          </section>
+        </div>
+
+        <div class="lesson-bottom">
+          <div class="takeaway"><span class="takeaway-label">À RETENIR</span><p>Le <strong>bit</strong> est la plus petite unité d’information.</p></div>
+          <button class="primary-button" id="challenge-open" type="button" aria-expanded="false" aria-controls="challenge" disabled>Vérifier ma compréhension <span aria-hidden="true">↗</span></button>
+        </div>
+
+        <section class="challenge" id="challenge" aria-labelledby="challenge-title" hidden>
+          <div class="challenge-heading"><p class="eyebrow">UN PETIT DÉFI</p><button class="text-button" id="challenge-close" type="button">Fermer <span aria-hidden="true">×</span></button></div>
+          <h2 id="challenge-title" tabindex="-1">Et si l’on changeait de convention ?</h2>
+          <p>On décide maintenant de noter <strong>0 une lampe allumée</strong>. Est-ce que cela change l’état physique de la lampe ?</p>
+          <form id="challenge-form">
+            <fieldset>
+              <legend class="sr-only">Est-ce que changer la convention change l’état physique de la lampe ?</legend>
+              <label class="answer"><input type="radio" name="answer" value="yes" required><span>Oui, la lampe s’éteint.</span></label>
+              <label class="answer"><input type="radio" name="answer" value="no" required><span>Non, seule sa représentation change.</span></label>
+            </fieldset>
+            <div class="challenge-actions"><button class="primary-button" id="answer-check" type="submit" disabled>Vérifier ma réponse <span aria-hidden="true">→</span></button><p class="feedback" id="answer-feedback" role="status" aria-live="polite" aria-atomic="true"></p></div>
+          </form>
+        </section>
+        <noscript><p class="notice">Activez JavaScript pour manipuler l’interrupteur et répondre au défi. Ici, une lampe éteinte est représentée par 0 et une lampe allumée par 1 : deux valeurs possibles pour un bit.</p></noscript>
+      </main>
+
+      <footer class="site-footer">
+        <div class="course-signature"><img class="ati-logo" src="./assets/logo-ati-partie-1.png" width="204" height="204" alt="ATI"><span>ARTS ET TECHNOLOGIES DE L’IMAGE<br><span>Du bit au code.</span></span></div>
+        <p class="footer-lesson" id="lesson-status">01 <span aria-hidden="true">/</span> Pourquoi deux états ?</p>
+        <img class="university-logo" src="./assets/logo-universite-paris-8-couleur-partie-1.png" width="955" height="477" alt="Université Paris 8 — Des créations">
+      </footer>
+    </div>
+  </body>
+</html>

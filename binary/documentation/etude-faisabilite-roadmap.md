@@ -4,6 +4,8 @@
 Public : enseignement supérieur, initiation ou consolidation avant des travaux pratiques en C/C++.  
 Statut : proposition de conception ; les charges et les critères pédagogiques restent à éprouver par un prototype.
 
+Avancement : l’écran 01 « Pourquoi deux états ? » est implémenté dans [l’application](../index.html), avec interrupteur, bit synchronisé et défi corrigé. Les [instructions de lancement](../../README.md) permettent de l’essayer localement. Les autres écrans et la publication restent à réaliser.
+
 ## 1. Recommandation
 
 **Le projet est réalisable avec du JavaScript vanilla, du HTML, du SVG et des animations CSS légères, hébergés sur GitHub Pages.** Une application statique suffit pour présenter les cours, manipuler les bits, corriger les exercices et conserver une progression sur l’appareil de l’étudiant. GitHub Pages publie précisément ce type de fichiers depuis un dépôt : [présentation officielle](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages).
@@ -304,7 +306,7 @@ La lecture des polices incorporées aux deux PDF confirme la présence de **Robo
 
 Les logos gardent une place stable : signature ATI en bas à gauche et Paris 8 en bas à droite sur les grandes vues, en écho aux supports. Sur petit écran, ils rejoignent un pied de page dans le flux du document. Leur affichage ne recouvre jamais les commandes ni les exercices. Le logo ATI disponible mesure 204 × 204 pixels : conserver un affichage compact pour préserver sa netteté.
 
-Les polices seront hébergées avec le site dans `binary/fonts/`, au format WOFF2 avec leurs licences associées, et chargées par `@font-face` avec `font-display: swap`. Prévoir une police sans empattement de secours pour le texte et une police monospace pour le code. Les fichiers de polices restent à ajouter lors du développement ; les images déjà renommées restent directement dans `binary/assets/`.
+Les polices sont hébergées avec le prototype dans `binary/fonts/`, au format WOFF2 avec leurs licences associées, et chargées par `@font-face` avec `font-display: swap`. Une police sans empattement de secours est prévue pour le texte et une police monospace pour le code. Les images déjà renommées restent directement dans `binary/assets/`.
 
 ### 8.2. Palette et signification des couleurs
 
