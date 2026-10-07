@@ -10,6 +10,8 @@ Statut : proposition de conception ; les charges et les critères pédagogiques 
 
 Le format recommandé est un **diaporama interactif organisé en sept modules**, utilisable en projection et individuellement. Chaque notion suit le même mouvement : une question, une prédiction de l’étudiant, une manipulation, une explication, puis un exercice de transfert vers le code.
 
+L’identité graphique prolonge celle des supports : **logos ATI et Université Paris 8, Roboto pour les textes, Roboto Mono pour les nombres et le code, fond gris clair et bits actifs jaune vif**. La section 8 précise cette direction et son adaptation aux interactions web.
+
 La première version complète proposée comprend **40 écrans courts**, dont plusieurs réutilisent les mêmes outils. Un écran peut comporter plusieurs étapes, mais conserve un seul objectif pédagogique. Un prototype de six écrans précède cette version pour vérifier la compréhension, la lisibilité en salle et la difficulté de réalisation des interactions.
 
 La principale difficulté est pédagogique : rendre visibles la position des bits, les retenues et les changements d’interprétation, tout en préparant correctement aux règles du C/C++. Les calculs et le volume de données sont modestes.
@@ -211,6 +213,8 @@ Le projet peut conserver une structure simple, sans framework d’interface ni c
 ```text
 binary/
   index.html
+  assets/                 # Images et logos existants, directement à la racine
+  fonts/                  # Roboto et Roboto Mono au format web, avec leurs licences
   styles/
     base.css              # Typographie, couleurs, dispositions
     components.css        # Bits, registres, tableaux, mémoire
@@ -281,7 +285,67 @@ Une publication directe depuis une branche reste possible à la racine ou depuis
 
 Les étudiants accèdent au cours par son URL. Les réponses et la progression restent dans leur navigateur. Le déploiement Pages fait partie de l’étape 4 de la roadmap ; aucun service applicatif côté serveur n’est nécessaire pour ce périmètre.
 
-## 8. Animation, lisibilité et accessibilité
+## 8. Identité graphique, animation et accessibilité
+
+### 8.1. Continuité avec les supports
+
+L’application reprend la composition aérée des diapositives : fond gris clair, titres amples, explication courte et grande zone de démonstration. La page de titre de la partie 1 fournit la référence pour l’accueil ; sa page 9 fournit celle des registres et des calculs.
+
+La lecture des polices incorporées aux deux PDF confirme la présence de **Roboto** et de **Roboto Mono**, avec plusieurs graisses. Les couleurs ci-dessous constituent une palette de travail relevée dans le rendu des supports et les logos extraits ; leur usage dans l’interface est une proposition d’adaptation.
+
+| Élément | Référence et usage proposé |
+| --- | --- |
+| Logo ATI | Réutiliser [le logo extrait de la partie 1](../assets/logo-ati-partie-1.png), en conservant proportions et couleurs, dans la signature du cours. |
+| Logo Paris 8 | Utiliser [la version couleur](../assets/logo-universite-paris-8-couleur-partie-1.png) sur l’accueil et les ouvertures de module ; [la version noire](../assets/logo-universite-paris-8-noir-partie-1.png) peut accompagner les écrans de cours. |
+| Titres | Roboto 300, avec Roboto 400 en mode projection si nécessaire ; tailles généreuses et espacement régulier. |
+| Texte courant | Roboto 400 ; Roboto 500 ou 700 pour les commandes et les informations importantes. |
+| Bits, hexa, adresses et code | Roboto Mono 400 ou 700 ; chiffres alignés, largeur stable des cellules et zéros de tête visibles. |
+| Illustrations | Réutiliser les images de `binary/assets/` pour contextualiser une notion ; construire les schémas manipulables en HTML/SVG. |
+
+Les logos gardent une place stable : signature ATI en bas à gauche et Paris 8 en bas à droite sur les grandes vues, en écho aux supports. Sur petit écran, ils rejoignent un pied de page dans le flux du document. Leur affichage ne recouvre jamais les commandes ni les exercices. Le logo ATI disponible mesure 204 × 204 pixels : conserver un affichage compact pour préserver sa netteté.
+
+Les polices seront hébergées avec le site dans `binary/fonts/`, au format WOFF2 avec leurs licences associées, et chargées par `@font-face` avec `font-display: swap`. Prévoir une police sans empattement de secours pour le texte et une police monospace pour le code. Les fichiers de polices restent à ajouter lors du développement ; les images déjà renommées restent directement dans `binary/assets/`.
+
+### 8.2. Palette et signification des couleurs
+
+| Couleur | Valeur de départ | Fonction |
+| --- | --- | --- |
+| Gris clair | `#EEEEEE` | Fond général, relevé dans les diapositives |
+| Blanc | `#FFFFFF` | Surfaces de calcul et texte des bits à 0 |
+| Noir | `#000000` | Texte principal et fond des bits à 0 |
+| Gris foncé | `#595959` | Sous-titres et informations secondaires |
+| Jaune vif | `#EEFF41` | Fond des bits à 1, avec chiffre noir ; relevé sur la page 9 de la partie 1 |
+| Violet | `#842578` | Accent de navigation et contour de focus, issu du logo Paris 8 |
+| Magenta | `#B41859` | Accent ponctuel de l’identité Paris 8 |
+
+**Un bit à 1 est jaune avec un chiffre noir ; un bit à 0 est noir avec un chiffre blanc.** La sélection clavier ajoute un contour distinct, extérieur à la case. Un bit à 0 reste une commande active : il ne prend pas l’apparence d’un bouton désactivé.
+
+Le jaune exprime la valeur 1 dans les registres. Une correction utilise un libellé « correct » ou « à revoir » et un symbole explicite, pour éviter de confondre valeur du bit et réussite de l’exercice. Les composantes rouge, verte et bleue restent réservées aux explications RVB, avec leurs lettres et valeurs toujours visibles.
+
+Les choix seront centralisés dans des variables CSS, par exemple :
+
+```css
+:root {
+  --font-text: "Roboto", Arial, sans-serif;
+  --font-code: "Roboto Mono", monospace;
+  --color-page: #eeeeee;
+  --color-surface: #ffffff;
+  --color-text: #000000;
+  --color-muted: #595959;
+  --color-bit-on: #eeff41;
+  --color-bit-off: #000000;
+  --color-accent: #842578;
+  --color-accent-secondary: #b41859;
+}
+```
+
+### 8.3. Composition d’un écran
+
+L’en-tête indique le module, le titre et la progression. La zone principale associe une consigne courte à une démonstration suffisamment grande pour lire chaque bit. En projection, l’explication peut occuper le tiers gauche et la manipulation les deux tiers droits ; sur petit écran, elles se superposent. Les commandes « prédire », « vérifier », « étape suivante » et « réinitialiser » gardent leur emplacement d’un exercice à l’autre.
+
+Des cellules rectangulaires, des séparateurs de quartets et des flèches simples reprennent le vocabulaire des schémas existants. Les regroupements, la typographie et l’espacement assurent la hiérarchie visuelle. Les blocs de code utilisent les mêmes fonds clairs et restent proches de la manipulation qu’ils expliquent.
+
+### 8.4. Mouvement et lisibilité
 
 Les animations doivent révéler un mécanisme : propagation d’une retenue, déplacement d’un bit, sélection d’un quartet ou transfert d’un octet. Les transitions entre diapositives peuvent rester très discrètes.
 
@@ -297,6 +361,8 @@ Principes de conception :
 - À petit écran, les trois composantes RVB se superposent verticalement ; elles restent alignées horizontalement lorsque l’espace le permet.
 
 La navigation et le contrôle du mouvement suivent les [recommandations WAI pour les diaporamas](https://www.w3.org/WAI/tutorials/carousels/). La réduction des animations utilise [`prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion), complétée par un réglage dans l’application.
+
+Viser un contraste d’au moins 4,5:1 pour le texte courant, et 3:1 pour les grands textes selon leur taille et leur graisse : [critère WCAG sur le contraste du texte](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html). Les contours et indicateurs indispensables à la compréhension des commandes visent 3:1 avec les couleurs adjacentes : [contraste des éléments non textuels](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html). Le jaune des bits utilise donc du texte noir et un contour sombre lorsqu’il est adjacent à une surface claire.
 
 Pour la projection, tester une diapositive réelle dans la salle : contraste, taille du code, indices des bits et visibilité des retenues au dernier rang. La validation sur un ordinateur portable ne suffit pas à juger cet usage.
 
@@ -322,8 +388,8 @@ Les charges ci-dessous sont des **estimations de conception**, pas un devis. Ell
 
 | Étape | Charge | Travaux et livrables | Condition de passage |
 | --- | --- | --- | --- |
-| **0. Cadrage pédagogique** | 2–3 jours | Corriger les exemples source ; fixer conventions et objectifs ; rédiger le storyboard ; choisir les exercices témoins | Chaque module possède une compétence observable et des résultats de référence |
-| **1. Prototype de six écrans** | 4–6 jours | Écrans 02, 04, 07, 08, 18 et 24 ; registre, regroupement hexa, retenues et décalage ; première navigation accessible | Un petit groupe peut manipuler et expliquer les changements ; lisibilité en projection vérifiée |
+| **0. Cadrage pédagogique** | 2–3 jours | Corriger les exemples source ; fixer conventions et objectifs ; rédiger le storyboard ; choisir les exercices témoins ; formaliser palette, typographie et placement des logos | Chaque module possède une compétence observable et des résultats de référence ; direction graphique documentée |
+| **1. Prototype de six écrans** | 4–6 jours | Écrans 02, 04, 07, 08, 18 et 24 ; registre, regroupement hexa, retenues et décalage ; navigation accessible ; intégration des logos, polices et variables CSS | Un petit groupe peut manipuler et expliquer les changements ; identité graphique et lisibilité en projection vérifiées |
 | **2. Composants et interactions** | 8–12 jours | Noyau de calcul, opérations, signé, mémoire, RVB, contrôleur des étapes, modes et sauvegarde | Cas de référence automatisés corrects ; composants utilisables au clavier et sans mouvement |
 | **3. Parcours complet** | 5–8 jours | Intégrer les 40 écrans, consignes, indices et corrections ; vérifier les exemples C/C++ ; harmoniser le vocabulaire | Parcours intégral réalisable ; chaque compétence possède au moins un exercice autonome |
 | **4. Essais, corrections et mise en ligne** | 4–6 jours | Essais en salle et individuels ; vérification des navigateurs ; corrections ; documentation d’usage ; workflow GitHub Actions et publication Pages | Critères de réception satisfaits, URL publiée vérifiée et version identifiée |
@@ -366,6 +432,7 @@ Pour la première utilisation en cours, proposer un court diagnostic avant le pa
 
 - Aucun écart sur les cas de référence numériques et les fragments C/C++ valides.
 - Tous les exercices obligatoires réalisables au clavier, avec animation réduite et sans dépendance à la couleur seule.
+- Logos correctement proportionnés, Roboto et Roboto Mono chargées depuis le site, palette cohérente et contrastes vérifiés pour les textes et les commandes.
 - Parcours et reprise testés dans les versions de Chrome, Firefox, Safari et Edge retenues pour l’établissement ; absence de blocage si la sauvegarde échoue.
 - Lecture satisfaisante en projection ; accès aux manipulations sur un écran étroit sans commandes masquées.
 - Cible pédagogique à confirmer lors du pilote : au moins 80 % des étudiants réussissent quatre des cinq tâches finales — conversion, retenue, interprétation signée, masque, extraction RVB — et expliquent leur démarche.
