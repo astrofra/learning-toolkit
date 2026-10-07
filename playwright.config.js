@@ -3,6 +3,8 @@ import { defineConfig } from '@playwright/test';
 export default defineConfig({
   testDir: './binary/tests',
   fullyParallel: true,
+  // Éviter de saturer le petit serveur HTTP local avec plusieurs navigateurs.
+  workers: 1,
   reporter: 'list',
   use: {
     baseURL: 'http://127.0.0.1:4174/binary/',

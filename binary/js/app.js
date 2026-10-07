@@ -1,5 +1,8 @@
 import { readPreferences, savePreferences } from './preferences.js';
 import { mountTwoStates } from './screens/two-states.js';
+import { mountTwoBits } from './screens/two-bits.js';
+import { mountMemory } from './screens/memory.js';
+import { mountDeck } from './deck.js';
 
 const preferences = readPreferences();
 const systemMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -30,4 +33,8 @@ systemMotion.addEventListener('change', renderPreferences);
 renderPreferences();
 projectionButton.disabled = false;
 motionButton.disabled = false;
-mountTwoStates(document.querySelector('#lesson'));
+mountDeck([
+  { id: '01', hash: 'module-a/ecran-01', chapter: 'A', chapterTitle: 'LES FONDAMENTAUX', title: 'Pourquoi deux états ?', root: document.querySelector('#screen-01'), mount: mountTwoStates },
+  { id: '02', hash: 'module-a/ecran-02', chapter: 'A', chapterTitle: 'LES FONDAMENTAUX', title: 'Un bit, plusieurs bits', root: document.querySelector('#screen-02'), mount: mountTwoBits },
+  { id: '27', hash: 'module-f/ecran-27', chapter: 'F', chapterTitle: 'LA MÉMOIRE', title: 'Adresse et contenu', root: document.querySelector('#screen-27'), mount: mountMemory },
+]);

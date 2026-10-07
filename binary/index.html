@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#eeeeee">
-    <meta name="description" content="Comprendre le binaire en le manipulant. Une première expérience autour d’un interrupteur, de deux états et d’un bit.">
+    <meta name="description" content="Comprendre le binaire en le manipulant : bits, combinaisons, adresses mémoire et contenu des octets.">
     <title>Pourquoi deux états ? — Atelier binaire · ATI</title>
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
     <link rel="preload" href="./fonts/roboto-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="./styles/fonts.css">
     <link rel="stylesheet" href="./styles/base.css">
     <link rel="stylesheet" href="./styles/two-states.css">
+    <link rel="stylesheet" href="./styles/two-bits.css">
+    <link rel="stylesheet" href="./styles/memory.css">
     <link rel="stylesheet" href="./styles/motion.css">
     <script type="module" src="./js/app.js"></script>
   </head>
@@ -38,14 +40,19 @@
 
       <main id="lesson" tabindex="-1">
         <div class="chapter-heading">
-          <p class="eyebrow"><span class="chapter-letter">A</span> LES FONDAMENTAUX</p>
-          <span class="screen-index">ÉCRAN <strong>01</strong></span>
+          <p class="eyebrow"><span class="chapter-letter" id="chapter-letter">A</span><span id="chapter-title">LES FONDAMENTAUX</span></p>
+          <nav class="screen-navigation" aria-label="Navigation des écrans" hidden>
+            <span class="navigation-slot"><a id="screen-previous" class="screen-arrow" href="#module-a/ecran-01" aria-label="Écran précédent" hidden>←</a></span>
+            <span class="screen-index">ÉCRAN <strong id="screen-number">01</strong></span>
+            <span class="navigation-slot"><a id="screen-next" class="screen-arrow" href="#module-a/ecran-02" aria-label="Écran suivant : Un bit, plusieurs bits">→</a></span>
+          </nav>
         </div>
 
+        <div id="screen-01" data-screen>
         <div class="lesson-layout">
           <section class="lesson-introduction" aria-labelledby="lesson-title">
             <p class="section-kicker">DU MONDE PHYSIQUE AU NUMÉRIQUE</p>
-            <h1 id="lesson-title">Pourquoi<br> deux états<span class="title-question">?</span></h1>
+            <h1 id="lesson-title" tabindex="-1">Pourquoi<br> deux états<span class="title-question">?</span></h1>
             <p class="lead">Éteint ou allumé.<br>Deux états suffisent pour commencer<br class="desktop-break"> à représenter une information.</p>
             <div class="definition">
               <span class="definition-number" aria-hidden="true">1<span>bit</span></span>
@@ -111,7 +118,7 @@
         </div>
 
         <section class="challenge" id="challenge" aria-labelledby="challenge-title" hidden>
-          <div class="challenge-heading"><p class="eyebrow">UN PETIT DÉFI</p><button class="text-button" id="challenge-close" type="button">Fermer <span aria-hidden="true">×</span></button></div>
+          <div class="challenge-heading"><p class="eyebrow">UN PETIT DÉFI</p><button class="text-button" id="challenge-close" data-challenge-close type="button">Fermer <span aria-hidden="true">×</span></button></div>
           <h2 id="challenge-title" tabindex="-1">Et si l’on changeait de convention ?</h2>
           <p>On décide maintenant de noter <strong>0 une lampe allumée</strong>. Est-ce que cela change l’état physique de la lampe ?</p>
           <form id="challenge-form">
@@ -123,7 +130,161 @@
             <div class="challenge-actions"><button class="primary-button" id="answer-check" type="submit" disabled>Vérifier ma réponse <span aria-hidden="true">→</span></button><p class="feedback" id="answer-feedback" role="status" aria-live="polite" aria-atomic="true"></p></div>
           </form>
         </section>
-        <noscript><p class="notice">Activez JavaScript pour manipuler l’interrupteur et répondre au défi. Ici, une lampe éteinte est représentée par 0 et une lampe allumée par 1 : deux valeurs possibles pour un bit.</p></noscript>
+        </div>
+
+        <div id="screen-02" data-screen hidden>
+          <div class="lesson-layout">
+            <section class="lesson-introduction two-bits-introduction" aria-labelledby="two-bits-title">
+              <p class="section-kicker">ASSEMBLER POUR REPRÉSENTER DAVANTAGE</p>
+              <h1 id="two-bits-title" tabindex="-1">Un bit,<br> plusieurs bits<span class="title-question">.</span></h1>
+              <p class="lead">Un bit offre deux possibilités.<br>En ajoutant un second bit, on peut<br class="desktop-break"> former de nouvelles combinaisons.</p>
+              <div class="definition">
+                <span class="definition-number" aria-hidden="true">2<span>bits</span></span>
+                <p>Chaque bit peut valoir <strong>0 ou 1.</strong><br>Leur position compte aussi.</p>
+              </div>
+              <p class="lesson-instruction"><span class="instruction-arrow" aria-hidden="true">↗</span> Basculez les bits, puis enregistrez le motif.<br> Retrouvez les quatre combinaisons.</p>
+            </section>
+
+            <section class="experiment combinations-experiment" aria-labelledby="two-bits-experiment-title">
+              <div class="experiment-header">
+                <h2 class="eyebrow" id="two-bits-experiment-title"><span class="experiment-dot" aria-hidden="true"></span> COMPOSEZ LES POSSIBILITÉS</h2>
+                <button class="text-button" id="two-bits-reset" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></svg> Recommencer</button>
+              </div>
+
+              <div class="bit-composer">
+                <div class="bit-pair" role="group" aria-label="Composer un motif de deux bits" aria-describedby="two-bits-hint">
+                  <div class="editable-bit"><p class="diagram-label">BIT DE GAUCHE</p><button class="bit-button" type="button" aria-label="Bit de gauche" aria-pressed="false" data-bit="0" disabled><span class="bit-digit" aria-hidden="true">0</span><span class="bit-action" aria-hidden="true">BASCULER ↔</span></button></div>
+                  <div class="bit-pair-separator" aria-hidden="true">·</div>
+                  <div class="editable-bit"><p class="diagram-label">BIT DE DROITE</p><button class="bit-button" type="button" aria-label="Bit de droite" aria-pressed="false" data-bit="1" disabled><span class="bit-digit" aria-hidden="true">0</span><span class="bit-action" aria-hidden="true">BASCULER ↔</span></button></div>
+                </div>
+                <p class="composer-hint" id="two-bits-hint">Cliquez sur un bit pour passer de 0 à 1.</p>
+                <div class="capture-row">
+                  <p class="current-pattern-label">MOTIF ACTUEL <strong id="current-pattern">00</strong></p>
+                  <button class="primary-button record-pattern" id="record-pattern" type="button" disabled>Enregistrer ce motif <span aria-hidden="true">+</span></button>
+                </div>
+              </div>
+
+              <div class="pattern-collection">
+                <div class="collection-heading"><h3 class="diagram-label" id="collection-title">VOTRE COLLECTION</h3><p><strong id="pattern-count">0</strong><span> / 4 motifs</span></p></div>
+                <ol class="pattern-slots" aria-labelledby="collection-title">
+                  <li class="pattern-slot" aria-label="Premier emplacement vide"><span class="pattern-symbols" aria-hidden="true">··</span><span class="pattern-slot-label" aria-hidden="true">À TROUVER</span></li>
+                  <li class="pattern-slot" aria-label="Deuxième emplacement vide"><span class="pattern-symbols" aria-hidden="true">··</span><span class="pattern-slot-label" aria-hidden="true">À TROUVER</span></li>
+                  <li class="pattern-slot" aria-label="Troisième emplacement vide"><span class="pattern-symbols" aria-hidden="true">··</span><span class="pattern-slot-label" aria-hidden="true">À TROUVER</span></li>
+                  <li class="pattern-slot" aria-label="Quatrième emplacement vide"><span class="pattern-symbols" aria-hidden="true">··</span><span class="pattern-slot-label" aria-hidden="true">À TROUVER</span></li>
+                </ol>
+              </div>
+              <div class="collection-result">
+                <div class="combinations-insight" id="combinations-insight" hidden><span class="insight-formula">2 × 2 = 4</span><span class="sr-only">Deux possibilités pour chaque bit, soit quatre motifs différents au total.</span></div>
+                <div class="collection-feedback" id="collection-feedback" role="status" aria-live="polite" aria-atomic="true">Commencez par enregistrer votre premier motif.</div>
+              </div>
+              <p class="sr-only" id="two-bits-announcement" role="status" aria-live="polite" aria-atomic="true"></p>
+            </section>
+          </div>
+
+          <div class="lesson-bottom">
+            <div class="takeaway"><span class="takeaway-label">À RETENIR</span><p>Ajouter un bit <strong>double</strong> le nombre de combinaisons.</p></div>
+            <button class="primary-button" id="two-bits-challenge-open" type="button" aria-expanded="false" aria-controls="two-bits-challenge" disabled>Vérifier ma compréhension <span aria-hidden="true">↗</span></button>
+          </div>
+
+          <section class="challenge" id="two-bits-challenge" aria-labelledby="two-bits-challenge-title" hidden>
+            <div class="challenge-heading"><p class="eyebrow">UN PETIT DÉFI</p><button class="text-button" data-challenge-close type="button">Fermer <span aria-hidden="true">×</span></button></div>
+            <h2 id="two-bits-challenge-title" tabindex="-1">Mêmes bits, même motif ?</h2>
+            <p>Les motifs <strong class="inline-bits">01</strong> et <strong class="inline-bits">10</strong> contiennent chacun un 0 et un 1. Peut-on les compter comme deux combinaisons différentes ?</p>
+            <form>
+              <fieldset>
+                <legend class="sr-only">01 et 10 sont-ils deux combinaisons différentes ?</legend>
+                <label class="answer"><input type="radio" name="answer" value="same" required><span>Non, ils contiennent les mêmes bits.</span></label>
+                <label class="answer"><input type="radio" name="answer" value="different" required><span>Oui, les bits n’occupent pas les mêmes positions.</span></label>
+              </fieldset>
+              <div class="challenge-actions"><button class="primary-button" type="submit" disabled>Vérifier ma réponse <span aria-hidden="true">→</span></button><p class="feedback" role="status" aria-live="polite" aria-atomic="true"></p></div>
+            </form>
+          </section>
+        </div>
+        <div id="screen-27" data-screen hidden>
+          <div class="lesson-layout memory-layout">
+            <section class="lesson-introduction memory-introduction" aria-labelledby="memory-title">
+              <div class="memory-heading">
+                <p class="section-kicker">SE REPÉRER DANS LA MÉMOIRE</p>
+                <h1 id="memory-title" tabindex="-1">Une adresse.<br> Un contenu<span class="title-question">.</span></h1>
+              </div>
+              <div class="memory-explanation">
+                <p class="lead">L’adresse indique <strong>où chercher.</strong><br>Le contenu indique <strong>ce qui est stocké.</strong><br>Ce sont deux informations différentes.</p>
+                <p class="lesson-instruction"><span class="instruction-arrow" aria-hidden="true">↗</span> Sélectionnez une case, puis changez son contenu.<br> Son adresse reste la même.</p>
+              </div>
+              <div class="definition">
+                <span class="definition-number" aria-hidden="true">16<span>octets</span></span>
+                <p>Une petite mémoire de <strong>16 cases.</strong><br> Chaque case contient <strong>8 bits.</strong></p>
+              </div>
+            </section>
+
+            <section class="experiment memory-experiment" aria-labelledby="memory-experiment-title">
+              <div class="experiment-header">
+                <h2 class="eyebrow" id="memory-experiment-title"><span class="experiment-dot" aria-hidden="true"></span> EXPLOREZ LA MÉMOIRE</h2>
+                <button class="text-button" id="memory-reset" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></svg> Recommencer</button>
+              </div>
+
+              <div class="memory-workspace">
+                <section class="memory-map" aria-labelledby="memory-map-title">
+                  <div class="memory-section-heading">
+                    <h3 class="diagram-label" id="memory-map-title">16 ADRESSES CONSÉCUTIVES · 1 OCTET PAR CASE</h3>
+                    <div class="memory-clear-action"><span id="memory-clear-hint">Tous les octets à 00</span><button class="memory-clear-button" id="memory-clear" type="button" lang="en" aria-describedby="memory-clear-hint" disabled>Reset memory</button></div>
+                  </div>
+                  <p class="memory-map-hint" id="memory-map-hint"><strong>Adresse au-dessus.</strong> Contenu dans la case. Les nombres sont en hexadécimal.</p>
+                  <div class="memory-strip" id="memory-grid" role="group" aria-label="Cases mémoire de 0x00 à 0x0F" aria-describedby="memory-map-hint memory-keyboard-hint"></div>
+                  <div class="memory-map-legend">
+                    <p class="memory-modified-hint"><span aria-hidden="true"></span> Octet modifié</p>
+                    <p class="memory-keyboard-hint" id="memory-keyboard-hint">Faites défiler le ruban ou utilisez les flèches ← →.</p>
+                  </div>
+                </section>
+
+                <section class="memory-inspector" aria-labelledby="memory-inspector-title">
+                  <h3 class="diagram-label" id="memory-inspector-title">LA CASE SÉLECTIONNÉE</h3>
+                  <div class="memory-address-readout">
+                    <div><span class="memory-field-label">ADRESSE</span><strong id="memory-address">0x0A</strong></div>
+                    <div class="address-binary-readout"><code id="memory-address-binary">1010</code><span>4 bits pour choisir la case</span></div>
+                  </div>
+                  <div class="memory-content-editor">
+                    <div class="memory-content-heading"><span class="memory-field-label">CONTENU</span><span class="memory-content-values"><strong id="memory-value">0x3C</strong><span id="memory-decimal">60 en décimal</span></span></div>
+                    <div class="memory-byte" id="memory-byte" role="group" aria-label="Les huit bits du contenu" aria-describedby="memory-bit-hint"></div>
+                    <p class="memory-bit-hint" id="memory-bit-hint">Cliquez sur un bit pour modifier l’octet.</p>
+                  </div>
+                  <div class="memory-write-editor">
+                    <form class="memory-write-form" id="memory-write-form" novalidate>
+                      <label for="memory-write-value">Ou écrivez une valeur hexadécimale</label>
+                      <div class="memory-write-controls"><input id="memory-write-value" name="value" type="text" value="3C" autocomplete="off" spellcheck="false" autocapitalize="characters" aria-describedby="memory-write-hint memory-write-feedback" disabled><button class="primary-button" type="submit" disabled>Écrire <span aria-hidden="true">→</span></button></div>
+                      <p id="memory-write-hint">De 00 à FF, soit de 0 à 255.</p>
+                    </form>
+                    <p class="memory-write-feedback" id="memory-write-feedback" role="status" aria-live="polite" aria-atomic="true"></p>
+                  </div>
+                </section>
+              </div>
+
+              <div class="memory-relation"><span class="memory-field-label">À CET EMPLACEMENT</span><code><span class="memory-code-name">mémoire</span>[<span id="memory-relation-address">0x0A</span>] = <strong id="memory-relation-value">0x3C</strong></code></div>
+              <div class="memory-observation"><span aria-hidden="true">↳</span><p id="memory-observation">La case 0x0A contient 0x3C. Son adresse et son contenu ne sont pas la même chose.</p></div>
+              <p class="sr-only" id="memory-announcement" role="status" aria-live="polite" aria-atomic="true"></p>
+            </section>
+          </div>
+
+          <div class="lesson-bottom">
+            <div class="takeaway"><span class="takeaway-label">À RETENIR</span><p><strong>L’adresse identifie la case.</strong> Son contenu peut changer.</p></div>
+            <button class="primary-button" id="memory-challenge-open" type="button" aria-expanded="false" aria-controls="memory-challenge" disabled>Vérifier ma compréhension <span aria-hidden="true">↗</span></button>
+          </div>
+
+          <section class="challenge" id="memory-challenge" aria-labelledby="memory-challenge-title" hidden>
+            <div class="challenge-heading"><p class="eyebrow">UN PETIT DÉFI</p><button class="text-button" data-challenge-close type="button">Fermer <span aria-hidden="true">×</span></button></div>
+            <h2 id="memory-challenge-title" tabindex="-1">Qu’est-ce qui change quand on écrit ?</h2>
+            <p>Supposons que l’on écrive <strong class="inline-bits">0xFF</strong> dans la case d’adresse <strong class="inline-bits">0x0A</strong>. Que devient cette case ?</p>
+            <form>
+              <fieldset>
+                <legend class="sr-only">Que change une écriture de 0xFF à l’adresse 0x0A ?</legend>
+                <label class="answer"><input type="radio" name="answer" value="address" required><span>Son adresse devient 0xFF.</span></label>
+                <label class="answer"><input type="radio" name="answer" value="content" required><span>Son contenu devient 0xFF ; son adresse reste 0x0A.</span></label>
+              </fieldset>
+              <div class="challenge-actions"><button class="primary-button" type="submit" disabled>Vérifier ma réponse <span aria-hidden="true">→</span></button><p class="feedback" role="status" aria-live="polite" aria-atomic="true"></p></div>
+            </form>
+          </section>
+        </div>
+        <noscript><p class="notice">Activez JavaScript pour manipuler les expériences et répondre aux défis. Ici, une lampe éteinte est représentée par 0 et une lampe allumée par 1 : deux valeurs possibles pour un bit.</p></noscript>
       </main>
 
       <footer class="site-footer">

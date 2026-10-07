@@ -4,7 +4,7 @@
 Public : enseignement supérieur, initiation ou consolidation avant des travaux pratiques en C/C++.  
 Statut : proposition de conception ; les charges et les critères pédagogiques restent à éprouver par un prototype.
 
-Avancement : l’écran 01 « Pourquoi deux états ? » est implémenté dans [l’application](../index.html), avec interrupteur, bit synchronisé et défi corrigé. Les [instructions de lancement](../../README.md) permettent de l’essayer localement. Les autres écrans et la publication restent à réaliser.
+Avancement : les écrans 01 « Pourquoi deux états ? », 02 « Un bit, plusieurs bits » et 27 « Adresse et contenu » sont implémentés dans [l’application](../index.html). Ils proposent l’interrupteur, une collection des quatre motifs de deux bits, une mémoire de 16 octets lisibles et modifiables, des défis corrigés et une navigation conservant les manipulations pendant la session. Les [instructions de lancement](../../README.md) permettent de les essayer localement. Les autres écrans et la publication restent à réaliser.
 
 ## 1. Recommandation
 
