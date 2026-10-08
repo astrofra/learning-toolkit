@@ -6,13 +6,14 @@ Adresse de publication : **[astrofra.github.io/learning-toolkit](https://astrofr
 
 ## Atelier binaire
 
-Trois écrans sont disponibles dans [`binary/index.html`](binary/index.html) :
+Quatre écrans sont disponibles dans [`binary/index.html`](binary/index.html) :
 
 - **01 — Pourquoi deux états ?** : interrupteur, lampe et bit synchronisés, puis défi sur la convention de représentation.
 - **02 — Un bit, plusieurs bits** : deux bits manipulables, collection des quatre motifs sans doublon, puis défi sur la position des bits.
 - **27 — Adresse et contenu** : mémoire de 16 octets, sélection d’une adresse, lecture en binaire/hexadécimal/décimal et écriture bit par bit ou en hexadécimal, puis défi sur la distinction adresse/contenu.
+- **28 — Lecture, calcul, écriture** : machine simplifiée avec un registre d’adresse et deux registres de données, deux lectures, une addition et une écriture à suivre pas à pas, puis défi sur l’emplacement du résultat avant son stockage.
 
-Les flèches en haut de la page parcourent les écrans disponibles : **01 → 02 → 27**. Les numéros correspondent à la roadmap. Les écrans partagent le mode projection, le réglage de mouvement réduit et la présentation issue des supports : logos ATI/Paris 8, Roboto et couleurs.
+Les flèches en haut de la page parcourent les écrans disponibles : **01 → 02 → 27 → 28**. Les numéros correspondent à la roadmap. Les écrans partagent le mode projection, le réglage de mouvement réduit et la présentation issue des supports : logos ATI/Paris 8, Roboto et couleurs.
 
 ### Lancer l’aperçu
 
@@ -28,6 +29,8 @@ Accès direct au deuxième écran : **http://127.0.0.1:4173/#module-a/ecran-02**
 
 Accès direct à l’écran mémoire : **http://127.0.0.1:4173/#module-f/ecran-27**. Les 16 octets sont présentés sur une ligne, avec leurs adresses au-dessus des cases. Le ruban défile horizontalement sur petit écran ; les flèches gauche/droite du clavier parcourent les adresses. Une écriture accepte de `00` à `FF`, avec un préfixe `0x` facultatif ; les saisies hors plage sont refusées sans modifier la mémoire. **« Reset memory » met les 16 octets à `00`**, en conservant l’adresse sélectionnée. « Recommencer » restaure l’exemple initial et le défi.
 
+Accès direct à la machine : **http://127.0.0.1:4173/#module-f/ecran-28**. « Étape suivante » exécute une commande : lire `mémoire[0x0A]` dans A (`0x3C`), lire `mémoire[0x03]` dans B (`0x10`), additionner dans A (`0x4C`), puis copier A vers `mémoire[0x0C]`. Le registre d’adresse utilise 4 bits et les données sont des octets non signés. Cette séquence fixe ne produit aucun dépassement. La mémoire reste inchangée jusqu’à la dernière étape ; lire et stocker sont des copies. « Étape précédente » restaure exactement l’état antérieur, y compris avant une écriture. La mémoire de cet exemple est indépendante de celle de l’écran 27. « Recommencer » réinitialise la séquence et le défi. La notion est validée après avoir parcouru les quatre étapes et réussi le défi ; revenir en arrière ne retire pas cette validation.
+
 Les modules JavaScript nécessitent un serveur HTTP : utiliser cette commande plutôt que d’ouvrir le HTML par double-clic.
 
 ### Organisation
@@ -35,7 +38,7 @@ Les modules JavaScript nécessitent un serveur HTTP : utiliser cette commande pl
 - `binary/index.html` : structure accessible des écrans et navigation commune.
 - `binary/js/app.js` : initialisation et préférences d’affichage.
 - `binary/js/deck.js` : navigation par URL, focus et conservation des écrans pendant la session.
-- `binary/js/screens/` : comportements des écrans `two-states.js`, `two-bits.js` et `memory.js`.
+- `binary/js/screens/` : comportements des écrans `two-states.js`, `two-bits.js`, `memory.js` et `machine.js`.
 - `binary/js/widgets/` : composants partagés, dont l’ouverture et la correction des défis.
 - `binary/styles/` : polices, styles communs, présentation de l’écran et animations.
 - `binary/assets/` : images et logos, directement à la racine du dossier.
@@ -56,7 +59,7 @@ npm ci
 npm test
 ```
 
-Playwright prépare les fichiers à publier avec `npm run build`, puis lance un serveur de test distinct sur le port 4174. Les exercices sont testés sous `/learning-toolkit/`, comme sur GitHub Pages. Les tests couvrent clavier, défis, réinitialisation, collection sans doublons, lecture/écriture mémoire et validation des octets, navigation et historique, préférences, stockage indisponible, ressources locales et plusieurs largeurs d’écran. Sur GitHub Actions, ils utilisent Chromium installé par Playwright.
+Playwright prépare les fichiers à publier avec `npm run build`, puis lance un serveur de test distinct sur le port 4174. Les exercices sont testés sous `/learning-toolkit/`, comme sur GitHub Pages. Les tests couvrent clavier, défis, réinitialisation, collection sans doublons, lecture/écriture mémoire et validation des octets, séquence de la machine et retour arrière, navigation et historique, préférences, stockage indisponible, ressources locales et plusieurs largeurs d’écran. Sur GitHub Actions, ils utilisent Chromium installé par Playwright.
 
 ### Héberger sur GitHub Pages
 
@@ -73,6 +76,7 @@ Accès directs aux exercices :
 - [01 — Pourquoi deux états ?](https://astrofra.github.io/learning-toolkit/#module-a/ecran-01)
 - [02 — Un bit, plusieurs bits](https://astrofra.github.io/learning-toolkit/#module-a/ecran-02)
 - [27 — Adresse et contenu](https://astrofra.github.io/learning-toolkit/#module-f/ecran-27)
+- [28 — Lecture, calcul, écriture](https://astrofra.github.io/learning-toolkit/#module-f/ecran-28)
 
 L’application utilise uniquement des fichiers statiques et des chemins relatifs. `npm run build` copie `index.html`, `js/`, `styles/`, `assets/` et `fonts/` depuis `binary/` vers `dist/learning-toolkit/`. Seul le contenu de ce dossier est publié à la racine du site Pages ; les tests et les supports PDF sont exclus. Les fichiers source restent dans `binary/`.
 

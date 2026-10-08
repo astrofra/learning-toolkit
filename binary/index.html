@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="./styles/two-states.css">
     <link rel="stylesheet" href="./styles/two-bits.css">
     <link rel="stylesheet" href="./styles/memory.css">
+    <link rel="stylesheet" href="./styles/machine.css">
     <link rel="stylesheet" href="./styles/motion.css">
     <script type="module" src="./js/app.js"></script>
   </head>
@@ -279,6 +280,127 @@
                 <legend class="sr-only">Que change une écriture de 0xFF à l’adresse 0x0A ?</legend>
                 <label class="answer"><input type="radio" name="answer" value="address" required><span>Son adresse devient 0xFF.</span></label>
                 <label class="answer"><input type="radio" name="answer" value="content" required><span>Son contenu devient 0xFF ; son adresse reste 0x0A.</span></label>
+              </fieldset>
+              <div class="challenge-actions"><button class="primary-button" type="submit" disabled>Vérifier ma réponse <span aria-hidden="true">→</span></button><p class="feedback" role="status" aria-live="polite" aria-atomic="true"></p></div>
+            </form>
+          </section>
+        </div>
+        <div id="screen-28" data-screen hidden>
+          <div class="lesson-layout memory-layout">
+            <section class="lesson-introduction memory-introduction machine-introduction" aria-labelledby="machine-title">
+              <div>
+                <p class="section-kicker">SUIVRE LE TRAJET DES DONNÉES</p>
+                <h1 id="machine-title" tabindex="-1">Lire. Calculer.<br> Écrire<span class="title-question">.</span></h1>
+              </div>
+              <div>
+                <p class="lead">La mémoire <strong>conserve les données.</strong><br>Les registres les accueillent<br>le temps d’un <strong>calcul.</strong></p>
+                <p class="lesson-instruction"><span class="instruction-arrow" aria-hidden="true">↗</span> Avant chaque étape, prédisez ce qui va changer.<br> Puis avancez pour vérifier.</p>
+              </div>
+              <div class="definition">
+                <span class="definition-number" aria-hidden="true">8<span>bits</span></span>
+                <p>Des octets <strong>non signés, de 0 à 255.</strong><br> Une adresse sur <strong>4 bits.</strong></p>
+              </div>
+            </section>
+
+            <section class="experiment machine-experiment" aria-labelledby="machine-experiment-title">
+              <div class="experiment-header">
+                <h2 class="eyebrow" id="machine-experiment-title"><span class="experiment-dot" aria-hidden="true"></span> UNE PETITE MACHINE</h2>
+                <button class="text-button" id="machine-reset" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></svg> Recommencer</button>
+              </div>
+
+              <div class="machine-controls">
+                <div class="machine-progress"><strong id="machine-progress">0 / 4</strong><span id="machine-next-hint">À suivre : charger A</span></div>
+                <div class="machine-step-buttons">
+                  <button class="machine-back-button" id="machine-previous" type="button" disabled><span aria-hidden="true">←</span> Étape précédente</button>
+                  <button class="primary-button" id="machine-next" type="button" disabled>Étape suivante <span aria-hidden="true">→</span></button>
+                </div>
+              </div>
+
+              <div class="machine-workspace">
+                <section aria-labelledby="machine-program-title">
+                  <div class="machine-section-heading">
+                    <h3 class="diagram-label" id="machine-program-title">LE PROGRAMME À SUIVRE</h3>
+                    <p>Séquence fictive · une commande par clic</p>
+                  </div>
+                  <ol class="machine-program">
+                    <li data-machine-step="1"><span class="machine-step-number" aria-hidden="true">1</span><div><strong>Charger A</strong><code>A ← mémoire[0x0A]</code></div><span class="machine-step-state sr-only">À venir</span></li>
+                    <li data-machine-step="2"><span class="machine-step-number" aria-hidden="true">2</span><div><strong>Charger B</strong><code>B ← mémoire[0x03]</code></div><span class="machine-step-state sr-only">À venir</span></li>
+                    <li data-machine-step="3"><span class="machine-step-number" aria-hidden="true">3</span><div><strong>Additionner</strong><code>A ← A + B</code></div><span class="machine-step-state sr-only">À venir</span></li>
+                    <li data-machine-step="4"><span class="machine-step-number" aria-hidden="true">4</span><div><strong>Stocker</strong><code>mémoire[0x0C] ← A</code></div><span class="machine-step-state sr-only">À venir</span></li>
+                  </ol>
+                </section>
+
+                <section class="machine-memory" aria-labelledby="machine-memory-title">
+                  <div class="machine-section-heading">
+                    <h3 class="diagram-label" id="machine-memory-title">MÉMOIRE · 16 OCTETS</h3>
+                    <p>Adresse au-dessus · contenu en hexadécimal</p>
+                  </div>
+                  <div class="machine-memory-scroll" id="machine-memory-scroll" tabindex="0" role="region" aria-label="Mémoire de la machine, ruban défilant">
+                    <table class="machine-memory-table">
+                      <caption class="sr-only">Contenu des seize cases de mémoire. Le registre d’adresse désigne la case encadrée.</caption>
+                      <thead><tr id="machine-addresses"></tr></thead>
+                      <tbody><tr id="machine-cells"></tr></tbody>
+                    </table>
+                  </div>
+                  <p class="machine-memory-hint">Le cadre suit le registre d’adresse. Les mentions « lu » et « écrit » indiquent le dernier transfert.</p>
+                </section>
+
+                <div class="machine-transfer" id="machine-transfer" data-active="false">
+                  <span class="machine-transfer-label" id="machine-transfer-label">EN ATTENTE</span>
+                  <p><span id="machine-transfer-source">Mémoire</span><span class="machine-transfer-arrow" aria-hidden="true"> → </span><span class="sr-only"> vers </span><span id="machine-transfer-target">registres</span></p>
+                  <code id="machine-transfer-value">—</code>
+                </div>
+
+                <section class="machine-processor" aria-labelledby="machine-processor-title">
+                  <h3 class="diagram-label" id="machine-processor-title">PROCESSEUR SIMPLIFIÉ</h3>
+                  <div class="machine-register" id="machine-register-address">
+                    <h4>Registre d’adresse <span>4 bits</span></h4>
+                    <strong id="machine-address">0x00</strong>
+                    <div class="machine-bits machine-address-bits" id="machine-address-bits" role="img" aria-label="Adresse en binaire : 0000"></div>
+                    <p>Choisit une case en mémoire.</p>
+                  </div>
+                  <div class="machine-register" id="machine-register-a">
+                    <h4>Registre A <span>8 bits</span></h4>
+                    <div class="machine-register-value"><strong id="machine-a">0x00</strong><span id="machine-a-decimal">0 en décimal</span></div>
+                    <div class="machine-bits" id="machine-a-bits" role="img" aria-label="A en binaire : 00000000"></div>
+                    <p>Reçoit le premier octet, puis la somme.</p>
+                  </div>
+                  <div class="machine-register" id="machine-register-b">
+                    <h4>Registre B <span>8 bits</span></h4>
+                    <div class="machine-register-value"><strong id="machine-b">0x00</strong><span id="machine-b-decimal">0 en décimal</span></div>
+                    <div class="machine-bits" id="machine-b-bits" role="img" aria-label="B en binaire : 00000000"></div>
+                    <p>Conserve le second octet.</p>
+                  </div>
+                  <div class="machine-alu" id="machine-alu">
+                    <div><h4>Unité de calcul <span>addition</span></h4><p id="machine-calculation-hint">Chargez A et B avant l’addition.</p></div>
+                    <div class="machine-calculation"><code id="machine-calculation">A + B → A</code><span id="machine-calculation-decimal">Le résultat sera placé dans A.</span></div>
+                  </div>
+                </section>
+              </div>
+
+              <div class="machine-observation" role="status" aria-live="polite" aria-atomic="true">
+                <strong id="machine-step-title">Prêt · aucune commande exécutée</strong>
+                <p id="machine-observation">A et B valent zéro. Commencez par copier le contenu de la case 0x0A dans A.</p>
+              </div>
+              <p class="machine-model-note">Modèle pédagogique : commandes prédéfinies, mémoire indépendante de l’écran 27. Les étapes regroupent plusieurs opérations d’un processeur réel. Revenir en arrière restaure l’état précédent pour l’observer.</p>
+            </section>
+          </div>
+
+          <div class="lesson-bottom">
+            <div class="takeaway"><span class="takeaway-label">À RETENIR</span><p><strong>Lire copie. Calculer transforme.</strong> Seule l’écriture modifie la mémoire.</p></div>
+            <button class="primary-button" id="machine-challenge-open" type="button" aria-expanded="false" aria-controls="machine-challenge" disabled>Vérifier ma compréhension <span aria-hidden="true">↗</span></button>
+          </div>
+
+          <section class="challenge" id="machine-challenge" aria-labelledby="machine-challenge-title" hidden>
+            <div class="challenge-heading"><p class="eyebrow">UN PETIT DÉFI</p><button class="text-button" data-challenge-close type="button">Fermer <span aria-hidden="true">×</span></button></div>
+            <h2 id="machine-challenge-title" tabindex="-1">Le calcul est fait. Et la mémoire ?</h2>
+            <p>On a chargé <strong>0x3C dans A</strong> et <strong>0x10 dans B</strong>, puis exécuté <strong>A ← A + B</strong>. On s’arrête <strong>avant de stocker</strong>. Où se trouve le résultat 0x4C ?</p>
+            <form>
+              <fieldset>
+                <legend class="sr-only">Où se trouve 0x4C après l’addition, avant l’écriture ?</legend>
+                <label class="answer"><input type="radio" name="answer" value="source" required><span>Dans la case 0x0A, à la place de la valeur lue.</span></label>
+                <label class="answer"><input type="radio" name="answer" value="register" required><span>Dans A ; le contenu de la mémoire n’a pas changé.</span></label>
+                <label class="answer"><input type="radio" name="answer" value="destination" required><span>Déjà dans la case 0x0C, où l’on prévoit de le stocker.</span></label>
               </fieldset>
               <div class="challenge-actions"><button class="primary-button" type="submit" disabled>Vérifier ma réponse <span aria-hidden="true">→</span></button><p class="feedback" role="status" aria-live="polite" aria-atomic="true"></p></div>
             </form>

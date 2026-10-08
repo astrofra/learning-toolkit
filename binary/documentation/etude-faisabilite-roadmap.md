@@ -4,7 +4,7 @@
 Public : enseignement supérieur, initiation ou consolidation avant des travaux pratiques en C/C++.  
 Statut : proposition de conception ; les charges et les critères pédagogiques restent à éprouver par un prototype.
 
-Avancement : les écrans 01 « Pourquoi deux états ? », 02 « Un bit, plusieurs bits » et 27 « Adresse et contenu » sont implémentés dans [l’application](../index.html). Ils proposent l’interrupteur, une collection des quatre motifs de deux bits, une mémoire de 16 octets lisibles et modifiables, des défis corrigés et une navigation conservant les manipulations pendant la session. Les [instructions de lancement](../../README.md) permettent de les essayer localement. Les autres écrans et la publication restent à réaliser.
+Avancement : les écrans 01 « Pourquoi deux états ? », 02 « Un bit, plusieurs bits », 27 « Adresse et contenu » et 28 « Lecture, calcul, écriture » sont implémentés dans [l’application](../index.html). Ils proposent l’interrupteur, une collection des quatre motifs de deux bits, une mémoire de 16 octets lisibles et modifiables, une machine simplifiée à parcourir pas à pas, des défis corrigés et une navigation conservant les manipulations pendant la session. L’écran 28 illustre deux lectures, une addition dans un registre et une écriture, avec retour arrière et mémoire indépendante de l’écran 27. Les [instructions de lancement et de publication](../../README.md) permettent de les essayer localement et de les déployer sur GitHub Pages. La publication automatique est configurée ; les autres écrans restent à réaliser.
 
 ## 1. Recommandation
 
