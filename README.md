@@ -2,6 +2,8 @@
 
 Outils interactifs pour enseigner et apprendre les bases de l’informatique.
 
+Adresse de publication : **[astrofra.github.io/learning-toolkit](https://astrofra.github.io/learning-toolkit/)**.
+
 ## Atelier binaire
 
 Trois écrans sont disponibles dans [`binary/index.html`](binary/index.html) :
@@ -47,15 +49,31 @@ Pour ajouter un écran, créer sa section `data-screen` dans le HTML et son modu
 
 ### Vérifier
 
-Les tests utilisent Node.js, Python 3 et Google Chrome :
+Les tests locaux utilisent Node.js 20 ou plus, Python 3 et Google Chrome :
 
 ```sh
 npm ci
 npm test
 ```
 
-Playwright lance un serveur de test distinct sur le port 4174. Les tests couvrent clavier, défis, réinitialisation, collection sans doublons, lecture/écriture mémoire et validation des octets, navigation et historique, préférences, stockage indisponible, ressources locales et plusieurs largeurs d’écran.
+Playwright prépare les fichiers à publier avec `npm run build`, puis lance un serveur de test distinct sur le port 4174. Les exercices sont testés sous `/learning-toolkit/`, comme sur GitHub Pages. Les tests couvrent clavier, défis, réinitialisation, collection sans doublons, lecture/écriture mémoire et validation des octets, navigation et historique, préférences, stockage indisponible, ressources locales et plusieurs largeurs d’écran. Sur GitHub Actions, ils utilisent Chromium installé par Playwright.
 
 ### Héberger sur GitHub Pages
 
-L’application utilise uniquement des fichiers statiques et des chemins relatifs. Le dossier publié doit contenir `index.html`, `js/`, `styles/`, `assets/` et `fonts/`, issus de `binary/`. Il peut être placé à la racine du site Pages ou sous un préfixe. La publication GitHub Pages n’est pas configurée dans ce prototype.
+Le workflow [GitHub Pages](.github/workflows/pages.yml) teste puis publie l’atelier à chaque push sur `main`. Les pull requests exécutent les mêmes tests sans publication. Un lancement manuel est aussi disponible dans l’onglet **Actions → GitHub Pages → Run workflow**.
+
+Pour la première publication :
+
+1. Dans les [réglages Pages du dépôt](https://github.com/astrofra/learning-toolkit/settings/pages), choisir **GitHub Actions** dans **Build and deployment → Source**.
+2. Pousser les modifications sur `main`, ou relancer le workflow s’il a déjà été exécuté avant l’activation de Pages.
+3. Attendre la réussite du workflow, puis ouvrir **https://astrofra.github.io/learning-toolkit/**.
+
+Accès directs aux exercices :
+
+- [01 — Pourquoi deux états ?](https://astrofra.github.io/learning-toolkit/#module-a/ecran-01)
+- [02 — Un bit, plusieurs bits](https://astrofra.github.io/learning-toolkit/#module-a/ecran-02)
+- [27 — Adresse et contenu](https://astrofra.github.io/learning-toolkit/#module-f/ecran-27)
+
+L’application utilise uniquement des fichiers statiques et des chemins relatifs. `npm run build` copie `index.html`, `js/`, `styles/`, `assets/` et `fonts/` depuis `binary/` vers `dist/learning-toolkit/`. Seul le contenu de ce dossier est publié à la racine du site Pages ; les tests et les supports PDF sont exclus. Les fichiers source restent dans `binary/`.
+
+Pour vérifier localement la version destinée à GitHub Pages, lancer `npm run preview`, puis ouvrir **http://127.0.0.1:4173/learning-toolkit/**. Cette préparation ne demande aucune dépendance npm ; Node.js et Python 3 suffisent.
