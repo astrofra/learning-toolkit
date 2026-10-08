@@ -156,9 +156,9 @@ test('défi corrigé, navigation entre modules et conservation pendant la sessio
   await expect(page.locator('#lesson-status')).toHaveText('27 / Notion comprise ✓');
   await page.keyboard.press('Escape');
   await expect(open).toBeFocused();
-  await page.getByRole('link', { name: /Écran précédent : 02/ }).click();
-  await expect(page.locator('#chapter-letter')).toHaveText('A');
-  await expect(page.locator('#screen-number')).toHaveText('02');
+  await page.getByRole('link', { name: /Écran précédent : 26/ }).click();
+  await expect(page.locator('#chapter-letter')).toHaveText('E');
+  await expect(page.locator('#screen-number')).toHaveText('26');
   await page.getByRole('link', { name: /Écran suivant : 27/ }).click();
   await expect(page.locator('#memory-title')).toBeFocused();
   await expect(page.locator('#chapter-letter')).toHaveText('F');

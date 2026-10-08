@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="./styles/base.css">
     <link rel="stylesheet" href="./styles/two-states.css">
     <link rel="stylesheet" href="./styles/two-bits.css">
+    <link rel="stylesheet" href="./styles/shift-rotate.css">
     <link rel="stylesheet" href="./styles/memory.css">
     <link rel="stylesheet" href="./styles/machine.css">
     <link rel="stylesheet" href="./styles/motion.css">
@@ -196,6 +197,102 @@
                 <legend class="sr-only">01 et 10 sont-ils deux combinaisons différentes ?</legend>
                 <label class="answer"><input type="radio" name="answer" value="same" required><span>Non, ils contiennent les mêmes bits.</span></label>
                 <label class="answer"><input type="radio" name="answer" value="different" required><span>Oui, les bits n’occupent pas les mêmes positions.</span></label>
+              </fieldset>
+              <div class="challenge-actions"><button class="primary-button" type="submit" disabled>Vérifier ma réponse <span aria-hidden="true">→</span></button><p class="feedback" role="status" aria-live="polite" aria-atomic="true"></p></div>
+            </form>
+          </section>
+        </div>
+        <div id="screen-26" data-screen hidden>
+          <div class="lesson-layout memory-layout">
+            <section class="lesson-introduction memory-introduction movement-introduction" aria-labelledby="movement-title">
+              <div>
+                <p class="section-kicker">QUE DEVIENT LE BIT QUI SORT ?</p>
+                <h1 id="movement-title" tabindex="-1">Décaler<br> ou tourner<span class="title-question">?</span></h1>
+              </div>
+              <div>
+                <p class="lead">Dans les deux cas, les bits <strong>changent de place.</strong><br>Tout se joue au <strong>bord du registre.</strong></p>
+                <p class="lesson-instruction"><span class="instruction-arrow" aria-hidden="true">↗</span> Prédisez ce qui arrivera au bit qui sort.<br> Puis comparez les deux opérations.</p>
+              </div>
+              <div class="definition">
+                <span class="definition-number" aria-hidden="true">8<span>bits</span></span>
+                <p>Un octet <strong>non signé.</strong><br> Un déplacement de <strong>1 bit</strong> à chaque clic.</p>
+              </div>
+            </section>
+
+            <section class="experiment movement-experiment" aria-labelledby="movement-experiment-title">
+              <div class="experiment-header">
+                <h2 class="eyebrow" id="movement-experiment-title"><span class="experiment-dot" aria-hidden="true"></span> UN DÉPART, DEUX RÈGLES</h2>
+                <button class="text-button" id="movement-reset" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></svg> Recommencer</button>
+              </div>
+
+              <div class="movement-setup">
+                <div>
+                  <div class="movement-source-heading"><h3 class="diagram-label" id="movement-source-title">MOTIF DE DÉPART</h3><p><strong id="movement-source-hex">0x80</strong><span id="movement-source-decimal">128 en décimal</span></p></div>
+                  <div class="movement-byte movement-source" id="movement-source" role="group" aria-labelledby="movement-source-title" aria-describedby="movement-source-hint"></div>
+                  <p class="movement-hint" id="movement-source-hint">Cliquez sur les bits pour essayer un autre motif. Bit 7 à gauche, bit 0 à droite.</p>
+                </div>
+                <div class="movement-direction-settings">
+                  <fieldset class="movement-direction">
+                    <legend>Sens du déplacement</legend>
+                    <label><input type="radio" name="movement-direction" value="left" checked disabled><span>← Vers la gauche</span></label>
+                    <label><input type="radio" name="movement-direction" value="right" disabled><span>Vers la droite →</span></label>
+                  </fieldset>
+                  <p class="movement-hint">Changer un bit ou le sens remet les deux registres au départ.</p>
+                </div>
+              </div>
+
+              <div class="movement-controls">
+                <div class="movement-progress"><strong id="movement-progress">0 / 8</strong><span id="movement-direction-label">Vers la gauche</span></div>
+                <div class="movement-step-buttons">
+                  <button class="movement-back-button" id="movement-previous" type="button" disabled><span aria-hidden="true">←</span> Étape précédente</button>
+                  <button class="primary-button" id="movement-next" type="button" disabled>Déplacer d’un bit <span id="movement-next-arrow" aria-hidden="true">←</span></button>
+                </div>
+              </div>
+
+              <div class="movement-comparison">
+                <section class="movement-operation" id="movement-shift" aria-labelledby="movement-shift-title">
+                  <div class="movement-operation-heading"><span class="movement-operation-symbol" aria-hidden="true">←</span><div><h3 id="movement-shift-title">Décalage logique</h3><p>Le bit sort. Un zéro entre.</p></div></div>
+                  <p class="movement-row-label" data-movement-before-label>AVANT · MOTIF DE DÉPART</p>
+                  <div class="movement-byte movement-before" id="movement-shift-before" role="img" aria-label="Avant décalage : 10000000"></div>
+                  <svg class="movement-paths" id="movement-shift-paths" viewBox="0 0 800 120" aria-hidden="true"></svg>
+                  <div class="movement-byte movement-after" id="movement-shift-after" role="img" aria-label="Après décalage : 10000000"></div>
+                  <p class="movement-row-label movement-after-label" data-movement-after-label>APRÈS · EN ATTENTE</p>
+                  <div class="movement-value"><strong id="movement-shift-hex">0x80</strong><span id="movement-shift-decimal">128 en décimal</span></div>
+                  <div class="movement-edges"><p>Bit perdu <strong id="movement-shift-out">—</strong></p><p>Zéro inséré <strong id="movement-shift-in">—</strong></p></div>
+                  <p class="movement-rule">Le bit sortant est éliminé. La place libérée à l’autre extrémité reçoit toujours un <strong>0</strong>.</p>
+                </section>
+                <section class="movement-operation" id="movement-rotate" aria-labelledby="movement-rotate-title">
+                  <div class="movement-operation-heading"><span class="movement-operation-symbol" aria-hidden="true">↶</span><div><h3 id="movement-rotate-title">Rotation circulaire</h3><p>Le bit sort, puis revient à l’autre bout.</p></div></div>
+                  <p class="movement-row-label" data-movement-before-label>AVANT · MOTIF DE DÉPART</p>
+                  <div class="movement-byte movement-before" id="movement-rotate-before" role="img" aria-label="Avant rotation : 10000000"></div>
+                  <svg class="movement-paths" id="movement-rotate-paths" viewBox="0 0 800 120" aria-hidden="true"></svg>
+                  <div class="movement-byte movement-after" id="movement-rotate-after" role="img" aria-label="Après rotation : 10000000"></div>
+                  <p class="movement-row-label movement-after-label" data-movement-after-label>APRÈS · EN ATTENTE</p>
+                  <div class="movement-value"><strong id="movement-rotate-hex">0x80</strong><span id="movement-rotate-decimal">128 en décimal</span></div>
+                  <div class="movement-edges"><p>Bit sortant <strong id="movement-rotate-out">—</strong></p><p>Bit réinjecté <strong id="movement-rotate-in">—</strong></p></div>
+                  <p class="movement-rule">Le bit sortant rejoint l’autre extrémité. <strong>Aucun bit n’est perdu</strong> dans cette rotation sur 8 bits.</p>
+                </section>
+              </div>
+              <div class="movement-observation" role="status" aria-live="polite" aria-atomic="true"><strong id="movement-step-title">Même motif, même sens</strong><p id="movement-observation">Les deux registres partent de 10000000. Déplacez les bits vers la gauche pour comparer.</p></div>
+              <p class="movement-model-note">Chaque étape agit sur le résultat précédent de sa colonne. « Étape précédente » restaure l’historique de l’expérience ; elle ne réalise pas un décalage inverse. Ici, le décalage est logique et la rotation reste dans l’octet, sans bit de retenue externe.</p>
+            </section>
+          </div>
+
+          <div class="lesson-bottom">
+            <div class="takeaway"><span class="takeaway-label">À RETENIR</span><p>Un décalage insère <strong>un zéro.</strong> Une rotation réinjecte <strong>le bit sortant.</strong></p></div>
+            <button class="primary-button" id="movement-challenge-open" type="button" aria-expanded="false" aria-controls="movement-challenge" disabled>Vérifier ma compréhension <span aria-hidden="true">↗</span></button>
+          </div>
+
+          <section class="challenge" id="movement-challenge" aria-labelledby="movement-challenge-title" hidden>
+            <div class="challenge-heading"><p class="eyebrow">UN PETIT DÉFI</p><button class="text-button" data-challenge-close type="button">Fermer <span aria-hidden="true">×</span></button></div>
+            <h2 id="movement-challenge-title" tabindex="-1">Et avec un 1 à chaque extrémité ?</h2>
+            <p>On part de <strong class="inline-bits">10000001</strong> dans deux registres de 8 bits. On applique <strong>un décalage logique à gauche</strong> au premier et <strong>une rotation à gauche</strong> au second. Quels sont les résultats ?</p>
+            <form>
+              <fieldset>
+                <legend class="sr-only">Résultats du décalage et de la rotation de 10000001 d’un bit vers la gauche</legend>
+                <label class="answer"><input type="radio" name="answer" value="same" required><span>Les deux donnent <code>00000010</code>.</span></label>
+                <label class="answer"><input type="radio" name="answer" value="distinct" required><span>Décalage : <code>00000010</code> ; rotation : <code>00000011</code>.</span></label>
+                <label class="answer"><input type="radio" name="answer" value="swapped" required><span>Décalage : <code>00000011</code> ; rotation : <code>00000010</code>.</span></label>
               </fieldset>
               <div class="challenge-actions"><button class="primary-button" type="submit" disabled>Vérifier ma réponse <span aria-hidden="true">→</span></button><p class="feedback" role="status" aria-live="polite" aria-atomic="true"></p></div>
             </form>

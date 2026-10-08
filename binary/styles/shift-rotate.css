@@ -1,0 +1,92 @@
+.movement-introduction h1 { font-size: clamp(40px, 3.6vw, 52px); }
+.movement-experiment { min-width: 0; overflow: visible; }
+.movement-setup { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: 32px; padding: 20px 24px; }
+.movement-setup > div { min-width: 0; }
+.movement-source-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; margin-bottom: 10px; }
+.movement-source-heading h3 { margin: 0; font-weight: 400; letter-spacing: 1px; }
+.movement-source-heading p { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; }
+.movement-source-heading strong { font: 400 19px var(--font-code); }
+.movement-source-heading p > span, .movement-hint { color: var(--color-muted); font-size: 11px; line-height: 1.65; }
+.movement-hint { margin-top: 10px; }
+.movement-byte { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 5px; }
+.movement-source-bit, .movement-byte > span { min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid var(--color-bit-off); border-radius: 3px; background: var(--color-bit-off); color: white; }
+.movement-source-bit { min-height: 64px; padding: 8px 0; gap: 5px; }
+.movement-source-bit[aria-pressed="true"], .movement-byte > span[data-on="true"] { background: var(--color-bit-on); color: #000; }
+.movement-source-digit { font: 400 28px/1.1 var(--font-code); }
+.movement-bit-position { font: 400 9px var(--font-code); }
+.movement-direction { display: flex; flex-wrap: wrap; gap: 10px; border: 0; padding: 0; margin: 0; }
+.movement-direction legend { margin-bottom: 12px; font-size: 13px; font-weight: 500; }
+.movement-direction label { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 10px 12px; border: 1px solid #8b8b85; border-radius: 3px; cursor: pointer; font-size: 12px; }
+.movement-direction label:has(input:checked) { border-color: var(--color-accent); color: var(--color-accent); background: #faf2f9; }
+.movement-direction input { width: 16px; height: 16px; margin: 0; accent-color: var(--color-accent); }
+.movement-controls { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 12px 24px; background: white; border-block: 1px solid var(--color-border); box-shadow: 0 3px 5px #00000008; }
+.movement-progress { display: flex; align-items: center; gap: 16px; }
+.movement-progress strong { font: 400 18px var(--font-code); }
+.movement-progress > span { font-size: 12px; color: var(--color-muted); }
+.movement-step-buttons { display: flex; gap: 12px; }
+.movement-step-buttons button { min-height: 44px; padding: 12px 16px; font-size: 12px; gap: 16px; }
+.movement-back-button { display: inline-flex; align-items: center; justify-content: center; border: 1px solid #8b8b85; border-radius: 3px; background: white; }
+.movement-back-button:not(:disabled):hover { color: var(--color-accent); border-color: var(--color-accent); }
+.movement-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 22px 24px; gap: 24px; }
+.movement-operation { min-width: 0; border: 1px solid var(--color-border); border-radius: 4px; padding: 18px; }
+.movement-operation-heading { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.movement-operation-heading h3 { margin: 0 0 5px; font-size: 20px; font-weight: 400; letter-spacing: -.3px; }
+.movement-operation-heading p { color: var(--color-muted); font-size: 12px; line-height: 1.6; }
+.movement-operation-symbol { flex: 0 0 auto; display: grid; place-items: center; width: 36px; height: 36px; color: var(--color-accent); background: #faf2f9; font-size: 27px; }
+.movement-row-label { font: 400 9px/1.5 var(--font-code); letter-spacing: .8px; color: var(--color-muted); margin-bottom: 8px; }
+.movement-after-label { margin: 8px 0 0; }
+.movement-byte > span { min-height: 44px; padding: 7px 0; font: 400 27px/1.1 var(--font-code); }
+.movement-before > span { min-height: 36px; font-size: 23px; }
+.movement-byte > span[data-edge="true"] { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.movement-paths { display: block; width: 100%; height: auto; margin-block: 5px; visibility: hidden; }
+.movement-paths[data-visible="true"] { visibility: visible; }
+.movement-value { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.movement-value strong { font: 400 24px var(--font-code); }
+.movement-value > span { color: var(--color-muted); font-size: 12px; }
+.movement-edges { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 12px 0; margin-top: 12px; border-block: 1px solid #e6e6e2; }
+.movement-edges p { display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--color-muted); }
+.movement-edges strong { color: var(--color-accent); font: 500 18px var(--font-code); }
+.movement-rule { font-size: 12px; line-height: 1.65; color: var(--color-muted); margin-top: 12px; }
+.movement-rule strong { font-weight: 500; color: var(--color-text); }
+.movement-observation { border-top: 1px solid #e6e6e2; padding: 15px 24px; }
+.movement-observation > strong { display: block; color: var(--color-accent); font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+.movement-observation p { font-size: 13px; line-height: 1.65; color: var(--color-muted); min-height: 42px; }
+.movement-model-note { font-size: 11px; line-height: 1.7; color: var(--color-muted); padding: 0 24px 18px; }
+.movement-source-bit, .movement-byte > span { transition: color 180ms ease, background-color 180ms ease; }
+#movement-challenge code { font-family: var(--font-code); }
+
+@media (min-width: 1100px) {
+  body[data-projection="true"] .movement-operation-heading h3 { font-size: 24px; }
+  body[data-projection="true"] .movement-byte > span { font-size: 32px; }
+  body[data-projection="true"] .movement-observation p, body[data-projection="true"] .movement-rule { font-size: 16px; }
+}
+@media (max-width: 900px) {
+  .movement-setup { grid-template-columns: 1fr; gap: 18px; }
+  .movement-direction-settings { display: flex; align-items: flex-end; gap: 20px; }
+  .movement-direction-settings > p { flex: 1; }
+  .movement-comparison { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 650px) {
+  .movement-introduction h1 { font-size: clamp(38px, 9vw, 49px); }
+  .movement-setup { padding: 16px; }
+  .movement-byte { gap: 4px; }
+  .movement-source-bit { min-height: 55px; }
+  .movement-source-digit { font-size: 23px; }
+  .movement-direction-settings { display: block; }
+  .movement-direction { gap: 8px; }
+  .movement-direction label { padding: 9px 8px; font-size: 11px; }
+  .movement-controls { padding-inline: 16px; }
+  .movement-step-buttons { width: 100%; flex-wrap: wrap; gap: 8px; }
+  .movement-step-buttons button { flex: 1 1 155px; }
+  .movement-comparison { padding: 16px; gap: 16px; }
+  .movement-operation { padding: 14px 10px; }
+  .movement-operation-heading { gap: 10px; }
+  .movement-operation-heading h3 { font-size: 19px; }
+  .movement-operation-symbol { width: 29px; height: 34px; }
+  .movement-byte > span { font-size: 22px; }
+  .movement-before > span { font-size: 18px; }
+  .movement-edges p { font-size: 11px; gap: 6px; }
+  .movement-edges strong { font-size: 16px; }
+  .movement-observation { padding-inline: 16px; }
+  .movement-model-note { padding-inline: 16px; }
+}
